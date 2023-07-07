@@ -1,13 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { LoadingController, Platform } from '@ionic/angular';
-import { map } from 'rxjs/operators';
-import { forkJoin, from } from 'rxjs';
-import { finalize } from 'rxjs/operators';
+import { LoadingController, Platform, ToastController } from '@ionic/angular';
 
 import { environment } from '@env/environment';
-import { Logger, UntilDestroy, untilDestroyed } from '@shared';
+import { Logger, UntilDestroy } from '@shared';
 import { AuthenticationService } from './authentication.service';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 
@@ -32,6 +29,7 @@ export class LoginComponent implements OnInit {
     private formBuilder: FormBuilder,
     private platform: Platform,
     private loadingController: LoadingController,
+    private toastController: ToastController,
     private authenticationService: AuthenticationService
   ) {
     this.createForm();
@@ -46,40 +44,33 @@ export class LoginComponent implements OnInit {
       .then((result) => {
         console.log(result);
         this.afAuth.authState.subscribe((user) => {
+          console.log('user', user);
           if (user) {
+            this.authenticationService.login({ username: `${user.email}`, password: '' });
             this.router.navigate([this.route.snapshot.queryParams['redirect'] || '/'], { replaceUrl: true });
           }
           loadingOverlay.dismiss();
         });
       })
-      .catch((error) => {
-        window.alert(error.message);
+      .catch(async (error) => {
+        console.log(error);
         loadingOverlay.dismiss();
+        let message = error.message;
+        switch (error.message) {
+          case 'auth/user-not-found':
+            message = 'Email no encontrado';
+            break;
+          case 'auth/wrong-password':
+            message = 'Email o contraseña incorrecta';
+            break;
+        }
+        const toast = await this.toastController.create({
+          message,
+          color: 'danger',
+          duration: 3000,
+        });
+        void toast.present();
       });
-    // this.isLoading = true;
-    // const login$ = this.authenticationService.login(this.loginForm.value);
-    // const loadingOverlay = await this.loadingController.create({});
-    // const loading$ = from(loadingOverlay.present());
-    // forkJoin([login$, loading$])
-    //   .pipe(
-    //     map(([credentials, ...rest]) => credentials),
-    //     finalize(() => {
-    //       this.loginForm.markAsPristine();
-    //       this.isLoading = false;
-    //       loadingOverlay.dismiss();
-    //     }),
-    //     untilDestroyed(this)
-    //   )
-    //   .subscribe(
-    //     (credentials) => {
-    //       log.debug(`${credentials.username} successfully logged in`);
-    //       this.router.navigate([this.route.snapshot.queryParams['redirect'] || '/'], { replaceUrl: true });
-    //     },
-    //     (error) => {
-    //       log.debug(`Login error: ${error}`);
-    //       this.error = error;
-    //     }
-    //   );
   }
 
   get isWeb(): boolean {
@@ -92,5 +83,9 @@ export class LoginComponent implements OnInit {
       password: ['', Validators.required],
       remember: true,
     });
+  }
+
+  registro(): void {
+    this.router.navigate(['/registro']);
   }
 }

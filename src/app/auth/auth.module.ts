@@ -7,9 +7,10 @@ import { IonicModule } from '@ionic/angular';
 import { I18nModule } from '@app/i18n';
 import { AuthRoutingModule } from './auth-routing.module';
 import { LoginComponent } from './login.component';
+import { RegistroComponent } from './registro/registro.component';
 
 @NgModule({
   imports: [CommonModule, ReactiveFormsModule, TranslateModule, IonicModule, I18nModule, AuthRoutingModule],
-  declarations: [LoginComponent],
+  declarations: [LoginComponent, RegistroComponent],
 })
 export class AuthModule {}

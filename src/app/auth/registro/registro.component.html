@@ -1,0 +1,40 @@
+<ion-grid class="margin-grid">
+  <ion-row class="ion-justify-content-center ion-no-padding">
+    <ion-col size-sm="6" size-lg="6" size-xl="6" class="ion-align-self-center ion-no-padding">
+      <div class="login-header ion-text-center">
+        <img src="assets/logoFM.svg" alt="" srcset="" />
+        <h6 class="title-login"><b>CREA UNA CUENTA</b></h6>
+        <p></p>
+      </div>
+      <form (ngSubmit)="SignUp()" [formGroup]="registroForm" novalidate>
+        <ion-list>
+          <ion-item lines="inset">
+            <ion-label color="medium" position="floating" translate>Email</ion-label>
+            <ion-input type="text" formControlName="username" autocomplete="username"></ion-input>
+          </ion-item>
+          <ion-text
+            color="danger"
+            [hidden]="registroForm.controls['username'].valid || registroForm.controls['username'].untouched"
+          >
+            <span class="ion-padding" translate>Email no valido</span>
+          </ion-text>
+          <ion-item lines="inset">
+            <ion-label color="medium" position="floating" translate>Password</ion-label>
+            <ion-input type="password" formControlName="password" autocomplete="current-password"></ion-input>
+          </ion-item>
+          <ion-text
+            color="danger"
+            [hidden]="registroForm.controls['password'].valid || registroForm.controls['password'].untouched"
+          >
+            <span class="ion-padding" translate>Contraseña requerida</span>
+          </ion-text>
+        </ion-list>
+        <div class="ion-padding-horizontal">
+          <ion-button type="submit" [disabled]="registroForm.invalid" class="ion-button-login" expand="block" translate>
+            REGISTRAR
+          </ion-button>
+        </div>
+      </form>
+    </ion-col>
+  </ion-row>
+</ion-grid>

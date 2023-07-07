@@ -13,18 +13,18 @@
         <div class="login-container">
           <form (ngSubmit)="login()" [formGroup]="loginForm" novalidate>
             <ion-text color="danger" [hidden]="!error || loginForm.dirty || isLoading">
-              <span class="ion-padding" translate>Username or password incorrect.</span>
+              <span class="ion-padding" translate>Email o contraseña incorrecta</span>
             </ion-text>
             <ion-list>
               <ion-item lines="inset">
-                <ion-label color="medium" position="floating" translate>Username</ion-label>
+                <ion-label color="medium" position="floating" translate>Email</ion-label>
                 <ion-input type="text" formControlName="username" autocomplete="username"></ion-input>
               </ion-item>
               <ion-text
                 color="danger"
                 [hidden]="loginForm.controls['username'].valid || loginForm.controls['username'].untouched"
               >
-                <span class="ion-padding" translate>Username is required</span>
+                <span class="ion-padding" translate>Email es requerido</span>
               </ion-text>
               <ion-item lines="inset">
                 <ion-label color="medium" position="floating" translate>Password</ion-label>
@@ -34,7 +34,7 @@
                 color="danger"
                 [hidden]="loginForm.controls['password'].valid || loginForm.controls['password'].untouched"
               >
-                <span class="ion-padding" translate>Password is required</span>
+                <span class="ion-padding" translate>Contraseña requerida</span>
               </ion-text>
             </ion-list>
             <div class="ion-padding-horizontal">
@@ -49,6 +49,9 @@
               </ion-button>
             </div>
           </form>
+          <div>
+            <ion-button fill="clear" (click)="registro()">Registrate</ion-button>
+          </div>
         </div>
       </ion-col>
     </ion-row>
