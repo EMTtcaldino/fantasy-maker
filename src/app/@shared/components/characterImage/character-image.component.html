@@ -1,0 +1,102 @@
+<ion-card>
+  <ion-row>
+    <ion-col size="8">
+      <ion-row>
+        <ion-col size="12">
+          <ion-item lines="none">
+            <ion-label
+              ><h2><b>Vamos a empezar...</b></h2>
+            </ion-label>
+          </ion-item>
+          <ion-item lines="none">
+            <ion-label class="ion-text-wrap"
+              >Aquí, tienes la oportunidad de darle vida a tu personaje soñado. Queremos escuchar todos los detalles
+              sobre cómo te lo imaginas y cuáles son esas características físicas tan especiales que lo hacen único.
+            </ion-label>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="4">
+          <ion-item lines="none">
+            <ion-label>Edad</ion-label>
+            <ion-input type="number" #age></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col size="4">
+          <ion-item lines="none">
+            <ion-label>Genero</ion-label>
+            <ion-select #gender multiple="true" placeholder="Selecciona">
+              <ion-select-option value="Hombre">Hombre</ion-select-option>
+              <ion-select-option value="Mujer">Mujer</ion-select-option>
+              <ion-select-option value="Sin definir">Sin definir</ion-select-option>
+            </ion-select>
+          </ion-item>
+        </ion-col>
+        <ion-col size="4">
+          <ion-item lines="none">
+            <ion-label>Especie</ion-label>
+            <ion-select #specie multiple="true" placeholder="Selecciona">
+              <ion-select-option value="Troll">Troll</ion-select-option>
+              <ion-select-option value="Hada">Hada</ion-select-option>
+              <ion-select-option value="Humana">Humano</ion-select-option>
+              <ion-select-option value="Elfo">Elfo</ion-select-option>
+              <ion-select-option value="Mago">Mago</ion-select-option>
+            </ion-select>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="12">
+          <ion-item lines="none">
+            <ion-label>Descripcion</ion-label>
+            <ion-textarea #description></ion-textarea>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="6">
+          <ion-item lines="none">
+            <ion-label>Estilo</ion-label>
+            <ion-select #kind multiple="true" placeholder="Selecciona">
+              <ion-select-option value="8Bits">8Bits</ion-select-option>
+              <ion-select-option value="Disney">Disney</ion-select-option>
+              <ion-select-option value="Realista">Realista</ion-select-option>
+              <ion-select-option value="Fornite">Fornite</ion-select-option>
+              <ion-select-option value="Anime">Anime</ion-select-option>
+              <ion-select-option value="Barbie">Barbie</ion-select-option>
+            </ion-select>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+    </ion-col>
+    <ion-col size="4">
+      <ion-img src="assets\logoFM.svg"></ion-img>
+      <ion-img *ngIf="characters.length === 0" src="assets\personajes.webp"></ion-img>
+
+      <div *ngFor="let characters of characters">
+        <ion-img [src]="characters.url"></ion-img>
+      </div>
+    </ion-col>
+  </ion-row>
+
+  <ion-item *ngIf="characters.length === 0 && create">
+    <ion-label>Creando personaje.... </ion-label>
+  </ion-item>
+
+  <ion-item>
+    <ion-button
+      color="primary"
+      (click)="createCharacter(age.value, gender.value, specie.value, description.value, kind.value)"
+      shape="round"
+    >
+      Crear personaje
+    </ion-button>
+
+    <ion-button slot="end" color="primary" (click)="setCharacter()" shape="round">
+      Continuar con este personaje
+    </ion-button>
+  </ion-item>
+</ion-card>
+
+<img src="" alt="" />

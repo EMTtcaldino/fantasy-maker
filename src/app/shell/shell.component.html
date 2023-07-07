@@ -1,14 +1,21 @@
 <ion-split-pane contentId="main-content">
-  <ion-menu contentId="main-content">
+  <!-- <ion-menu contentId="main-content">
     <ion-content>
       <div ion-fixed>
         <div class="profile ion-text-center ion-padding">
           <ion-icon class="profile-icon" name="person-circle"></ion-icon>
           <div>
             <ion-menu-toggle auto-hide="false">
-              <ion-button class="profile-button" color="light" (click)="showProfileActions()"
-                          shape="round" fill="outline" size="small" expand="block">
-                <ion-icon name="person"></ion-icon> {{username}}
+              <ion-button
+                class="profile-button"
+                color="light"
+                (click)="showProfileActions()"
+                shape="round"
+                fill="outline"
+                size="small"
+                expand="block"
+              >
+                <ion-icon name="person"></ion-icon> {{ username }}
               </ion-button>
             </ion-menu-toggle>
           </div>
@@ -27,6 +34,6 @@
         </ion-list>
       </div>
     </ion-content>
-  </ion-menu>
+  </ion-menu> -->
   <ion-router-outlet id="main-content"></ion-router-outlet>
 </ion-split-pane>

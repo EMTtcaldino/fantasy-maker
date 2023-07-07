@@ -9,17 +9,7 @@ import { AuthModule } from '@app/auth';
 import { ShellComponent } from './shell.component';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    TranslateModule,
-    IonicModule,
-    AuthModule,
-    I18nModule,
-    RouterModule
-  ],
-  declarations: [
-    ShellComponent
-  ]
+  imports: [CommonModule, TranslateModule, IonicModule, AuthModule, I18nModule, RouterModule],
+  declarations: [ShellComponent],
 })
-export class ShellModule {
-}
+export class ShellModule {}
