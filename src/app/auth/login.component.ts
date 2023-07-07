@@ -9,6 +9,7 @@ import { finalize } from 'rxjs/operators';
 import { environment } from '@env/environment';
 import { Logger, UntilDestroy, untilDestroyed } from '@shared';
 import { AuthenticationService } from './authentication.service';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
 
 const log = new Logger('Login');
 
@@ -25,6 +26,7 @@ export class LoginComponent implements OnInit {
   isLoading = false;
 
   constructor(
+    public afAuth: AngularFireAuth,
     private router: Router,
     private route: ActivatedRoute,
     private formBuilder: FormBuilder,
@@ -38,30 +40,46 @@ export class LoginComponent implements OnInit {
   ngOnInit() {}
 
   async login() {
-    this.isLoading = true;
-    const login$ = this.authenticationService.login(this.loginForm.value);
     const loadingOverlay = await this.loadingController.create({});
-    const loading$ = from(loadingOverlay.present());
-    forkJoin([login$, loading$])
-      .pipe(
-        map(([credentials, ...rest]) => credentials),
-        finalize(() => {
-          this.loginForm.markAsPristine();
-          this.isLoading = false;
+    return this.afAuth
+      .signInWithEmailAndPassword(this.loginForm.controls['username'].value, this.loginForm.controls['password'].value)
+      .then((result) => {
+        console.log(result);
+        this.afAuth.authState.subscribe((user) => {
+          if (user) {
+            this.router.navigate([this.route.snapshot.queryParams['redirect'] || '/'], { replaceUrl: true });
+          }
           loadingOverlay.dismiss();
-        }),
-        untilDestroyed(this)
-      )
-      .subscribe(
-        (credentials) => {
-          log.debug(`${credentials.username} successfully logged in`);
-          this.router.navigate([this.route.snapshot.queryParams['redirect'] || '/'], { replaceUrl: true });
-        },
-        (error) => {
-          log.debug(`Login error: ${error}`);
-          this.error = error;
-        }
-      );
+        });
+      })
+      .catch((error) => {
+        window.alert(error.message);
+        loadingOverlay.dismiss();
+      });
+    // this.isLoading = true;
+    // const login$ = this.authenticationService.login(this.loginForm.value);
+    // const loadingOverlay = await this.loadingController.create({});
+    // const loading$ = from(loadingOverlay.present());
+    // forkJoin([login$, loading$])
+    //   .pipe(
+    //     map(([credentials, ...rest]) => credentials),
+    //     finalize(() => {
+    //       this.loginForm.markAsPristine();
+    //       this.isLoading = false;
+    //       loadingOverlay.dismiss();
+    //     }),
+    //     untilDestroyed(this)
+    //   )
+    //   .subscribe(
+    //     (credentials) => {
+    //       log.debug(`${credentials.username} successfully logged in`);
+    //       this.router.navigate([this.route.snapshot.queryParams['redirect'] || '/'], { replaceUrl: true });
+    //     },
+    //     (error) => {
+    //       log.debug(`Login error: ${error}`);
+    //       this.error = error;
+    //     }
+    //   );
   }
 
   get isWeb(): boolean {
