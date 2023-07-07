@@ -17,23 +17,16 @@ describe('LoginComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [
-        IonicModule.forRoot(),
-        RouterTestingModule,
-        TranslateModule.forRoot(),
-        I18nModule,
-        ReactiveFormsModule
-      ],
+      imports: [IonicModule.forRoot(), RouterTestingModule, TranslateModule.forRoot(), I18nModule, ReactiveFormsModule],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
       providers: [
         { provide: AuthenticationService, useClass: MockAuthenticationService },
         { provide: CredentialsService, useClass: MockCredentialsService },
         Platform,
-        LoadingController
+        LoadingController,
       ],
-      declarations: [LoginComponent]
-    })
-    .compileComponents();
+      declarations: [LoginComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

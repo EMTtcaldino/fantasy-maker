@@ -10,18 +10,19 @@ import { AuthenticationService, CredentialsService } from '@app/auth';
 @Component({
   selector: 'app-shell',
   templateUrl: './shell.component.html',
-  styleUrls: ['./shell.component.scss']
+  styleUrls: ['./shell.component.scss'],
 })
 export class ShellComponent {
-
-  constructor(private router: Router,
-              private translateService: TranslateService,
-              private platform: Platform,
-              private alertController: AlertController,
-              private actionSheetController: ActionSheetController,
-              private authenticationService: AuthenticationService,
-              private credentialsService: CredentialsService,
-              private i18nService: I18nService) { }
+  constructor(
+    private router: Router,
+    private translateService: TranslateService,
+    private platform: Platform,
+    private alertController: AlertController,
+    private actionSheetController: ActionSheetController,
+    private authenticationService: AuthenticationService,
+    private credentialsService: CredentialsService,
+    private i18nService: I18nService
+  ) {}
 
   async showProfileActions() {
     let createdActionSheet: any;
@@ -30,7 +31,7 @@ export class ShellComponent {
         text: this.translateService.instant('Logout'),
         icon: this.platform.is('ios') ? undefined : 'log-out',
         role: 'destructive',
-        handler: () => this.logout()
+        handler: () => this.logout(),
       },
       {
         text: this.translateService.instant('Change language'),
@@ -41,13 +42,13 @@ export class ShellComponent {
           await createdActionSheet.dismiss();
           this.changeLanguage();
           return false;
-        }
+        },
       },
       {
         text: this.translateService.instant('Cancel'),
         icon: this.platform.is('ios') ? undefined : 'close',
-        role: 'cancel'
-      }
+        role: 'cancel',
+      },
     ];
 
     // On Cordova platform language is set to the device language
@@ -56,8 +57,8 @@ export class ShellComponent {
     }
 
     const actionSheetOptions: ActionSheetOptions = {
-      header: (this.username || undefined),
-      buttons
+      header: this.username || undefined,
+      buttons,
     };
 
     createdActionSheet = await this.actionSheetController.create(actionSheetOptions);
@@ -70,8 +71,7 @@ export class ShellComponent {
   }
 
   private logout() {
-    this.authenticationService.logout()
-      .subscribe(() => this.router.navigate(['/login'], { replaceUrl: true }));
+    this.authenticationService.logout().subscribe(() => this.router.navigate(['/login'], { replaceUrl: true }));
   }
 
   get isWeb(): boolean {
@@ -81,27 +81,26 @@ export class ShellComponent {
   private async changeLanguage() {
     const alertController = await this.alertController.create({
       header: this.translateService.instant('Change language'),
-      inputs: this.i18nService.supportedLanguages.map(language => ({
+      inputs: this.i18nService.supportedLanguages.map((language) => ({
         type: 'radio' as TextFieldTypes,
         name: language,
         label: language,
         value: language,
-        checked: language === this.i18nService.language
+        checked: language === this.i18nService.language,
       })),
       buttons: [
         {
           text: this.translateService.instant('Cancel'),
-          role: 'cancel'
+          role: 'cancel',
         },
         {
           text: this.translateService.instant('Ok'),
-          handler: language => {
+          handler: (language) => {
             this.i18nService.language = language;
-          }
-        }
-      ]
+          },
+        },
+      ],
     });
     await alertController.present();
   }
-
 }

@@ -1,47 +1,58 @@
 <ion-content no-bounce>
-  <div class="login-background"></div>
   <ion-grid class="ion-no-padding">
     <ion-row class="ion-justify-content-center ion-no-padding">
-      <ion-col size-sm="8" size-lg="6" size-xl="4" class="ion-align-self-center ion-no-padding">
-        <div class="login-header ion-text-center">
-          <h1 translate>APP_NAME</h1>
-          <h6>v{{version}}</h6>
-          <ion-list *ngIf="isWeb" color="primary" lines="none" class="ion-no-padding">
-            <app-language-selector type="select" itemClass="ion-color ion-color-primary item-lines-none">
-            </app-language-selector>
-          </ion-list>
+      <ion-col size-sm="6" size-lg="6" size-xl="6" class="ion-align-self-center ion-text-center">
+        <img src="assets/login-image.png" class="image-login" />
+      </ion-col>
+      <ion-col size-sm="6" size-lg="6" size-xl="6" class="ion-align-self-center ion-no-padding">
+        <div class="login-header ion-text-left">
+          <img src="assets/logoFM.svg" alt="" srcset="" />
         </div>
         <div class="login-container">
+          <h4 class="title-login"><b>!Bienvenido de vuelta!</b></h4>
+          <p>"Fantasy Maker: Da vida a tus creaciones, interactúa con tus personajes AI personalizados"</p>
           <form (ngSubmit)="login()" [formGroup]="loginForm" novalidate>
             <ion-text color="danger" [hidden]="!error || loginForm.dirty || isLoading">
-              <span class="ion-padding" translate>Username or password incorrect.</span>
+              <span class="ion-padding" translate>Email o contraseña incorrecta</span>
             </ion-text>
             <ion-list>
               <ion-item lines="inset">
-                <ion-label color="medium" position="floating" translate>Username</ion-label>
+                <ion-label color="medium" position="floating" translate>Email</ion-label>
                 <ion-input type="text" formControlName="username" autocomplete="username"></ion-input>
               </ion-item>
-              <ion-text color="danger" [hidden]="loginForm.controls['username'].valid || loginForm.controls['username'].untouched">
-                <span class="ion-padding" translate>Username is required</span>
+              <ion-text
+                color="danger"
+                [hidden]="loginForm.controls['username'].valid || loginForm.controls['username'].untouched"
+              >
+                <span class="ion-padding" translate>Email es requerido</span>
               </ion-text>
               <ion-item lines="inset">
                 <ion-label color="medium" position="floating" translate>Password</ion-label>
                 <ion-input type="password" formControlName="password" autocomplete="current-password"></ion-input>
               </ion-item>
-              <ion-text color="danger" [hidden]="loginForm.controls['password'].valid || loginForm.controls['password'].untouched">
-                <span class="ion-padding" translate>Password is required</span>
+              <ion-text
+                color="danger"
+                [hidden]="loginForm.controls['password'].valid || loginForm.controls['password'].untouched"
+              >
+                <span class="ion-padding" translate>Contraseña requerida</span>
               </ion-text>
-              <ion-item class="ion-padding-top" lines="none">
-                <ion-label translate>Remember me</ion-label>
-                <ion-checkbox slot="start" formControlName="remember"></ion-checkbox>
-              </ion-item>
             </ion-list>
             <div class="ion-padding-horizontal">
-              <ion-button type="submit" [disabled]="loginForm.invalid || isLoading" color="primary" expand="block" translate>
-                Login
+              <ion-button
+                type="submit"
+                [disabled]="loginForm.invalid || isLoading"
+                class="ion-button-login"
+                expand="block"
+                shape="round"
+                translate
+              >
+                Continuar
               </ion-button>
             </div>
           </form>
+          <div>
+            <ion-button fill="clear" (click)="registro()">Registrate</ion-button>
+          </div>
         </div>
       </ion-col>
     </ion-row>
