@@ -53,4 +53,8 @@ export class RegistroComponent implements OnInit {
       password: [null, Validators.required],
     });
   }
+
+  regresar(): void {
+    this.router.navigate(['/home']);
+  }
 }

@@ -7,10 +7,10 @@
       <ion-col size-sm="6" size-lg="6" size-xl="6" class="ion-align-self-center ion-no-padding">
         <div class="login-header ion-text-left">
           <img src="assets/logoFM.svg" alt="" srcset="" />
-          <h6 class="title-login"><b>!Bienvenido de vuelta!</b></h6>
-          <p>"Fantasy Maker: Da vida a tus creaciones, interactúa con tus personajes AI personalizados"</p>
         </div>
         <div class="login-container">
+          <h4 class="title-login"><b>!Bienvenido de vuelta!</b></h4>
+          <p>"Fantasy Maker: Da vida a tus creaciones, interactúa con tus personajes AI personalizados"</p>
           <form (ngSubmit)="login()" [formGroup]="loginForm" novalidate>
             <ion-text color="danger" [hidden]="!error || loginForm.dirty || isLoading">
               <span class="ion-padding" translate>Email o contraseña incorrecta</span>
@@ -43,6 +43,7 @@
                 [disabled]="loginForm.invalid || isLoading"
                 class="ion-button-login"
                 expand="block"
+                shape="round"
                 translate
               >
                 Continuar
