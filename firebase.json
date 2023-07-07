@@ -1,0 +1,9 @@
+{
+  "hosting": [
+    {
+      "target": "fantasy-maker",
+      "source": ".",
+      "frameworksBackend": {}
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "fantsymaker-hk": {
+      "hosting": {
+        "fantasy-maker": [
+          "fantsymaker-hk"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "fantsymaker-hk"
+  }
+}
